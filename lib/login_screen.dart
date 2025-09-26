@@ -68,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         vertical: 15,
                       ),
                       textStyle: const TextStyle(fontSize: 18,),
-                      backgroundColor: Colors.blue
+                      backgroundColor: Color(0xFF673AB7)
                     ),
                     onPressed: _login,
                     child: const Text("Login",style: TextStyle(color: Colors.white),),

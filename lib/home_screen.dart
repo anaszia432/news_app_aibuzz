@@ -15,6 +15,49 @@ class HomeScreen extends StatelessWidget {
     Get.offAll(() => const LoginScreen());
   }
 
+  ///For Logout Dialog
+  Future<void> _showLogoutDialog(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // User must tap a button
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          title: const Text('Logout !!'),
+          content: const Text('Are you sure you want to logout?'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop(); // Close dialog
+              },
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                minimumSize: Size(100, 20),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 15,
+                ),
+                backgroundColor: Color(0xFF673AB7),
+              ),
+              child: const Text('Yes',style: TextStyle(color: Colors.white),),
+              onPressed: () async {
+                Navigator.of(context).pop(); // Close dialog
+                await SessionManager.clearLoginSession();
+                Get.offAll(() => const LoginScreen());
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  ///Logout Dialog end here
+
   @override
   Widget build(BuildContext context) {
     controller.fetchNews(); // Fetch news on load
@@ -27,7 +70,9 @@ class HomeScreen extends StatelessWidget {
           actions: [
             IconButton(
               icon: const Icon(Icons.logout),
-              onPressed: _logout,
+              onPressed: () {
+                _showLogoutDialog(context);
+              },
             ),
           ],
           bottom: const TabBar(
@@ -51,13 +96,14 @@ class HomeScreen extends StatelessWidget {
                   return Card(
                     margin: const EdgeInsets.all(8),
                     child: ListTile(
-                      leading: article.urlToImage != ''
-                          ? Image.network(
-                              article.urlToImage,
-                              width: 100,
-                              fit: BoxFit.cover,
-                            )
-                          : null,
+                      leading:
+                          article.urlToImage != ''
+                              ? Image.network(
+                                article.urlToImage,
+                                width: 100,
+                                fit: BoxFit.cover,
+                              )
+                              : null,
                       title: Text(article.title),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,17 +113,38 @@ class HomeScreen extends StatelessWidget {
                           Text(
                             '${article.sourceName} • ${article.publishedAt}',
                             style: const TextStyle(
-                                fontSize: 12, color: Colors.grey),
+                              fontSize: 12,
+                              color: Colors.grey,
+                            ),
                           ),
                         ],
                       ),
                       isThreeLine: true,
-                      trailing: IconButton(
-                        icon: const Icon(Icons.bookmark_border),
-                        onPressed: () {
-                          controller.addBookmark(article);
-                          Get.snackbar('Bookmark', 'Bookmark Added !!',backgroundColor: const Color.fromARGB(255, 210, 208, 208));
-                        },
+                      trailing: Obx(
+                        () => IconButton(
+                          icon:
+                              controller.bookmarks.any(
+                                    (a) => a.url == article.url,
+                                  )
+                                  ? Icon(
+                                    Icons.bookmark,
+                                    color: Color(0xFF673AB7),
+                                  )
+                                  : Icon(Icons.bookmark_border),
+                          onPressed: () {
+                            controller.addBookmark(article);
+                            Get.snackbar(
+                              'Bookmark',
+                              'Bookmark Added !!',
+                              backgroundColor: const Color.fromARGB(
+                                255,
+                                210,
+                                208,
+                                208,
+                              ),
+                            );
+                          },
+                        ),
                       ),
                       onTap: () {
                         Navigator.push(
@@ -107,13 +174,14 @@ class HomeScreen extends StatelessWidget {
                   return Card(
                     margin: const EdgeInsets.all(8),
                     child: ListTile(
-                      leading: article.urlToImage != ''
-                          ? Image.network(
-                              article.urlToImage,
-                              width: 100,
-                              fit: BoxFit.cover,
-                            )
-                          : null,
+                      leading:
+                          article.urlToImage != ''
+                              ? Image.network(
+                                article.urlToImage,
+                                width: 100,
+                                fit: BoxFit.cover,
+                              )
+                              : null,
                       title: Text(article.title),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -123,7 +191,9 @@ class HomeScreen extends StatelessWidget {
                           Text(
                             '${article.sourceName} • ${article.publishedAt}',
                             style: const TextStyle(
-                                fontSize: 12, color: Colors.grey),
+                              fontSize: 12,
+                              color: Colors.grey,
+                            ),
                           ),
                         ],
                       ),
@@ -132,7 +202,16 @@ class HomeScreen extends StatelessWidget {
                         icon: const Icon(Icons.delete),
                         onPressed: () {
                           controller.removeBookmark(article);
-                          Get.snackbar('Bookmark', 'Bookmark Removed !!',backgroundColor: const Color.fromARGB(255, 210, 208, 208));
+                          Get.snackbar(
+                            'Bookmark',
+                            'Bookmark Removed !!',
+                            backgroundColor: const Color.fromARGB(
+                              255,
+                              210,
+                              208,
+                              208,
+                            ),
+                          );
                         },
                       ),
                       onTap: () {
