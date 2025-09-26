@@ -18,9 +18,9 @@ class Article {
     required this.publishedAt,
   });
 
-  // Factory constructor to create Article from JSON (API response)
+
   factory Article.fromJson(Map<String, dynamic> json) {
-    // Safely parse the publishedAt date
+   
     DateTime dateTime;
     try {
       dateTime = DateTime.parse(json['publishedAt'] ?? '');
@@ -49,7 +49,7 @@ class Article {
     };
   }
 
-  // ✅ Create Article from JSON stored in SharedPreferences
+  //  Create Article from JSON stored in SharedPreferences
   factory Article.fromJsonPrefs(Map<String, dynamic> json) {
     return Article(
       title: json['title'] ?? '',

@@ -44,7 +44,7 @@ class NewsController extends GetxController {
     List<String>? bookmarkStrings = prefs.getStringList('bookmarks');
     if (bookmarkStrings != null) {
       bookmarks.value =
-          bookmarkStrings.map((s) => Article.fromJson(jsonDecode(s))).toList();
+          bookmarkStrings.map((s) => Article.fromJsonPrefs(jsonDecode(s))).toList();
     }
   }
 
