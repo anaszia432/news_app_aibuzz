@@ -10,16 +10,16 @@ class HomeScreen extends StatelessWidget {
 
   final NewsController controller = Get.put(NewsController());
 
-  Future<void> _logout() async {
-    await SessionManager.clearLoginSession();
-    Get.offAll(() => const LoginScreen());
-  }
+  // Future<void> _logout() async {
+  //   await SessionManager.clearLoginSession();
+  //   Get.offAll(() => const LoginScreen());
+  // }
 
   ///For Logout Dialog
   Future<void> _showLogoutDialog(BuildContext context) async {
     return showDialog<void>(
       context: context,
-      barrierDismissible: false, // User must tap a button
+      barrierDismissible: false, 
       builder: (BuildContext context) {
         return AlertDialog(
           shape: RoundedRectangleBorder(
@@ -31,7 +31,7 @@ class HomeScreen extends StatelessWidget {
             TextButton(
               child: const Text('Cancel'),
               onPressed: () {
-                Navigator.of(context).pop(); // Close dialog
+                Navigator.of(context).pop(); 
               },
             ),
             ElevatedButton(
@@ -45,7 +45,7 @@ class HomeScreen extends StatelessWidget {
               ),
               child: const Text('Yes',style: TextStyle(color: Colors.white),),
               onPressed: () async {
-                Navigator.of(context).pop(); // Close dialog
+                Navigator.of(context).pop(); 
                 await SessionManager.clearLoginSession();
                 Get.offAll(() => const LoginScreen());
               },
@@ -60,10 +60,10 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    controller.fetchNews(); // Fetch news on load
+    controller.fetchNews(); 
 
     return DefaultTabController(
-      length: 2, // 2 tabs: News & Bookmarks
+      length: 2, 
       child: Scaffold(
         appBar: AppBar(
           title: const Text("News App"),
