@@ -1,16 +1,40 @@
 # news_app_aibuzz
 
-A new Flutter project.
+# Setup Instructions
+1. Clone the repo: git clone <https://github.com/anaszia432/news_app_aibuzz.git>
+2. Navigate to project: cd news_app_aibuzz
+3. Install dependencies: flutter pub get
+4. Run the app: flutter run
 
-## Getting Started
+# Screenshots of the app
+Home Screen:  
+- ![Home Screen](screenshots/home_news.png)
 
-This project is a starting point for a Flutter application.
+Login Screen:  
+- ![Login Screen](screenshots/login_screen.png)
 
-A few resources to get you started if this is your first Flutter project:
+Logout Dialog Screen:  
+- ![Logout Dialog Screen](screenshots/logout_dialog.png)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Webview Screen:  
+- ![Webview Screen](screenshots/webview.png)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Bookmark Screen:  
+- ![Bookmark Screen](screenshots/bookmarks_news.png)
+
+# Brief explanation of architecture choices
+I used GetX for state management because it simplifies reactive programming.    
+Folder structure:
+- lib/ : contains GetX controllers
+- lib/ : contains UI screens
+- models/ : data models
+
+# List of third-party packages used and why
+- get: For state management and routing
+- dio: For API calls
+- shared_preferences: To store local data
+- webview_flutter: To show the selected news in web view, used to display web pages within Flutter app
+- intl: for date and time formatting, also used for message and number formatting
+
+# Google Drive link for .apk file
+- Link: https://drive.google.com/file/d/14k_FSm_BhjwPbZdzgMfCQ3-R4239BqF9/view?usp=sharing
